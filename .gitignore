@@ -4,6 +4,7 @@
 # Log file
 *.log
 logs/
+*.lck
 
 # BlueJ files
 *.ctxt
@@ -35,6 +36,7 @@ buildNumber.properties
 .mvn/timing.properties
 .project
 .classpath
+.settings/
 .settings/*
 .settings
 
@@ -42,8 +44,10 @@ buildNumber.properties
 **.idea
 *.iml
 *.sh
+bin/
 /bin/
 lib/
+out/
 certs/
 *.jks
 *.p12

@@ -54,44 +54,32 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
   <groupId>io.github.rahulsinghai</groupId>
   <artifactId>jmeter.backendlistener.kafka</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+</dependency>
 ```
 
 ### Packaging and testing your newly added code
 
 Execute below mvn command. Make sure JAVA_HOME is set properly
-```
+
+```bash
 mvn package
 ```
+
 Move the resulting JAR to your `JMETER_HOME/lib/ext`.
 
-### Installing JMeter
+## Screenshots
 
-- SSH to a Unix machine with X-11 Forwarding enabled.
-- Download [JMeter](https://jmeter.apache.org/download_jmeter.cgi) binary and extract it:
-  
-  ```bash
-  mkdir -P /home/jmeter
-  cd /home/jmeter
-  curl -O -k http://mirror.vorboss.net/apache//jmeter/binaries/apache-jmeter-5.1.1.tgz
-  tar -zxvf apache-jmeter-5.1.1.tgz
-  ln -s apache-jmeter-5.1.1 ./current
-  ```
+### Configuration
 
-- Download and install [Plugin Manager](https://jmeter-plugins.org/wiki/PluginsManager/) to `lib/ext` folder:
+![screnshot1](https://cdn-images-1.medium.com/max/2000/1*iVb7mIp2dPg7zE4Ph3PrGQ.png "Screenshot of configuration")
 
-  ```bash
-  curl -O -k http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.3/jmeter-plugins-manager-1.3.jar
-  mv jmeter-plugins-manager-1.3.jar apache-jmeter-5.1.1/lib/ext/
-  ```
-  
-  Detailed instructions available at this [blog](https://octoperf.com/blog/2018/04/04/jmeter-plugins-install/).
+### Sample Grafana dashboard
 
-- Start JMeter:
+![screnshot1](https://image.ibb.co/jW6LNx/Screen_Shot_2018_03_21_at_10_21_18_AM.png "Sample Grafana Dashboard")
 
-  ```bash
-  cd /home/jmeter/apache-jmeter-5.1.1
-  JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=user -Dhttp.proxyPass=***" ./bin/jmeter.sh
-  ```
+### Sample Grafana dashboard
+
+![screnshot1](https://image.ibb.co/jW6LNx/Screen_Shot_2018_03_21_at_10_21_18_AM.png "Sample Grafana Dashboard")
 
 ### For more info
 

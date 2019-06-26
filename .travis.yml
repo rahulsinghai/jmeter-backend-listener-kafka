@@ -1,3 +1,31 @@
+sudo: false # faster builds
+
+# We use Java language. Travis CI supports other languages ​​too.
 language: java
+
 jdk:
 - oraclejdk8
+
+script: "mvn cobertura:cobertura"
+
+cache:
+  directories:
+    - $HOME/.m2
+
+# After the build, run the script that will collect JaCoCo statistics
+# It uses the third-party service https://codecov.io/
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# Send a notification to your email id, if the assembly has dropped
+notifications:
+  email:
+    recipients:
+      - singrahu@gmail.com
+    on_success: change # default: change
+    on_failure: always # default: always
+    on_start: never
+
+env:
+  global:
+    - CODECOV_TOKEN="4a65000e-fadf-4f97-bae1-685522e1df2d"

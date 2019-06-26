@@ -6,7 +6,7 @@
 
 	<groupId>io.github.rahulsinghai</groupId>
 	<artifactId>jmeter.backendlistener.kafka</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
@@ -56,6 +56,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-git-code-format.version>1.24</maven-git-code-format.version>
+		<maven.cobertura.plugin.version>2.7</maven.cobertura.plugin.version>
 		<java.version>1.8</java.version>
 		<junit.version>4.12</junit.version>
 		<junit.jupiter.version>5.4.2</junit.jupiter.version>
@@ -229,6 +231,50 @@
 				</executions>
 			</plugin>
 
+			<!-- https://github.com/Cosium/maven-git-code-format -->
+			<!-- Manual code formatting: mvn git-code-format:format-code -DglobPattern=**/* -->
+			<!-- Manual code format validation: mvn git-code-format:validate-code-format -DglobPattern=**/* -->
+			<plugin>
+				<groupId>com.cosium.code</groupId>
+				<artifactId>maven-git-code-format</artifactId>
+				<version>${maven-git-code-format.version}</version>
+				<executions>
+          <!-- On commit, format the modified java files -->
+					<execution>
+            <id>install-formatter-hook</id>
+            <goals>
+              <goal>install-hooks</goal>
+            </goals>
+          </execution>
+          <!-- On Maven verify phase, fail if any file (including unmodified) is badly formatted -->
+          <execution>
+            <id>validate-code-format</id>
+            <goals>
+              <goal>validate-code-format</goal>
+            </goals>
+          </execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>[3.5.4,)</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
@@ -303,6 +349,19 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${maven.cobertura.plugin.version}</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check />
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

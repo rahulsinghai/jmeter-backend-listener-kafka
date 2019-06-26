@@ -16,14 +16,11 @@
 
 package io.github.rahulsinghai.jmeter.backendlistener.kafka;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.kafka.clients.producer.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A wrapper around Kafka Producer to publish messages.
@@ -54,16 +51,12 @@ public class KafkaMetricPublisher {
     return this.metricList.size();
   }
 
-  /**
-   * This method closes the producer
-   */
+  /** This method closes the producer */
   public void closeProducer() {
     this.producer.close();
   }
 
-  /**
-   * This method clears the JSON documents list
-   */
+  /** This method clears the JSON documents list */
   public void clearList() {
     this.metricList.clear();
   }
@@ -77,30 +70,34 @@ public class KafkaMetricPublisher {
     this.metricList.add(metric);
   }
 
-  /**
-   * This method publishes the documents present in the list (metricList).
-   */
+  /** This method publishes the documents present in the list (metricList). */
   public void publishMetrics() {
 
     long time = System.currentTimeMillis();
 
     for (String metric : this.metricList) {
       final ProducerRecord<Long, String> record = new ProducerRecord<>(this.topic, metric);
-      producer.send(record, (metadata, exception) -> {
-        long elapsedTime = System.currentTimeMillis() - time;
-        if (metadata != null) {
-          System.out
-              .printf("sent record(key=%s value=%s) " + "meta(partition=%d, offset=%d) time=%d\n",
-                  record.key(), record.value(), metadata.partition(),
-                  metadata.offset(), elapsedTime);
-        } else {
-          if (logger.isErrorEnabled()) {
-            logger.error("Exception" + exception);
-            logger.error("Kafka Backend Listener was unable to publish to the Kafka topic {}.",
-                this.topic);
-          }
-        }
-      });
+      producer.send(
+          record,
+          (metadata, exception) -> {
+            long elapsedTime = System.currentTimeMillis() - time;
+            if (metadata != null) {
+              System.out.printf(
+                  "sent record(key=%s value=%s) " + "meta(partition=%d, offset=%d) time=%d\n",
+                  record.key(),
+                  record.value(),
+                  metadata.partition(),
+                  metadata.offset(),
+                  elapsedTime);
+            } else {
+              if (logger.isErrorEnabled()) {
+                logger.error("Exception" + exception);
+                logger.error(
+                    "Kafka Backend Listener was unable to publish to the Kafka topic {}.",
+                    this.topic);
+              }
+            }
+          });
     }
   }
 }

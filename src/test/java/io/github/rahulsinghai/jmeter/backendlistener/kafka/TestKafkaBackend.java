@@ -21,7 +21,6 @@ import static org.junit.Assert.assertNotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,11 +33,24 @@ public class TestKafkaBackend {
 
   @Before
   public void setUp() {
-    metricCI = new JSONMetric(new SampleResult(), "info", "yyyy-MM-dd'T'HH:mm:ss.SSSZZ", 1, false,
-        false,
-        new HashSet<>());
-    metricNoCI = new JSONMetric(new SampleResult(), "info", "yyyy-MM-dd'T'HH:mm:ss.SSSZZ", 0, false,
-        false, new HashSet<>());
+    metricCI =
+        new JSONMetric(
+            new SampleResult(),
+            "info",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZZ",
+            1,
+            false,
+            false,
+            new HashSet<>());
+    metricNoCI =
+        new JSONMetric(
+            new SampleResult(),
+            "info",
+            "yyyy-MM-dd'T'HH:mm:ss.SSSZZ",
+            0,
+            false,
+            false,
+            new HashSet<>());
   }
 
   @Test

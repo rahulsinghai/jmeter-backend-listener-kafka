@@ -28,7 +28,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContextService;
@@ -48,8 +47,14 @@ public class JSONMetric {
   private boolean allReqHeaders;
   private boolean allResHeaders;
 
-  public JSONMetric(SampleResult sr, String testMode, String timeStamp, int buildNumber,
-      boolean parseReqHeaders, boolean parseResHeaders, Set<String> fields) {
+  public JSONMetric(
+      SampleResult sr,
+      String testMode,
+      String timeStamp,
+      int buildNumber,
+      boolean parseReqHeaders,
+      boolean parseResHeaders,
+      Set<String> fields) {
     this.sampleResult = sr;
     this.kafkaTestMode = testMode.trim();
     this.kafkaTimestamp = timeStamp.trim();
@@ -69,7 +74,7 @@ public class JSONMetric {
   public Map<String, Object> getMetric(BackendListenerContext context) throws Exception {
     SimpleDateFormat sdf = new SimpleDateFormat(this.kafkaTimestamp);
 
-    //add all the default SampleResult parameters
+    // add all the default SampleResult parameters
     addFilteredJSON("AllThreads", this.sampleResult.getAllThreads());
     addFilteredJSON("BodySize", this.sampleResult.getBodySizeAsLong());
     addFilteredJSON("Bytes", this.sampleResult.getBytesAsLong());
@@ -118,9 +123,7 @@ public class JSONMetric {
     return this.json;
   }
 
-  /**
-   * This method adds all the assertions for the current sampleResult
-   */
+  /** This method adds all the assertions for the current sampleResult */
   private void addAssertions() {
     AssertionResult[] assertionResults = this.sampleResult.getAssertionResults();
     if (assertionResults != null) {
@@ -180,8 +183,8 @@ public class JSONMetric {
     while (pluginParameters.hasNext()) {
       String parameterName = pluginParameters.next();
 
-      if (!parameterName.startsWith("es.") && !context.getParameter(parameterName).trim()
-          .equals("")) {
+      if (!parameterName.startsWith("es.")
+          && !context.getParameter(parameterName).trim().equals("")) {
         String parameter = context.getParameter(parameterName).trim();
 
         try {
@@ -196,10 +199,7 @@ public class JSONMetric {
     }
   }
 
-
-  /**
-   * Method that adds the request and response's body/headers
-   */
+  /** Method that adds the request and response's body/headers */
   private void addDetails() {
     addFilteredJSON("RequestHeaders", this.sampleResult.getRequestHeaders());
     addFilteredJSON("RequestBody", this.sampleResult.getSamplerData());
@@ -215,11 +215,10 @@ public class JSONMetric {
    * backend listener.
    *
    * @param allReqHeaders boolean to determine if the user wants to separate ALL request headers
-   * into different ES JSON properties.
+   *     into different ES JSON properties.
    * @param allResHeaders boolean to determine if the user wants to separate ALL response headers
-   * into different ES JSON properties.
-   *
-   * NOTE: This will be fixed as soon as a patch comes in for JMeter to change the behaviour.
+   *     into different ES JSON properties.
+   *     <p>NOTE: This will be fixed as soon as a patch comes in for JMeter to change the behaviour.
    */
   private void parseHeadersAsJsonProps(boolean allReqHeaders, boolean allResHeaders) {
     LinkedList<String[]> headersArrayList = new LinkedList<>();
@@ -269,7 +268,8 @@ public class JSONMetric {
    */
   public Date getElapsedTime(boolean forBuildComparison) {
     String sElapsed;
-    //Calculate the elapsed time (Starting from midnight on a random day - enables us to compare of two loads over their duration)
+    // Calculate the elapsed time (Starting from midnight on a random day - enables us to compare of
+    // two loads over their duration)
     long start = JMeterContextService.getTestStartTime();
     long end = System.currentTimeMillis();
     long elapsed = (end - start);
@@ -277,18 +277,26 @@ public class JSONMetric {
     long seconds = (elapsed / 1000) % 60;
 
     Calendar cal = Calendar.getInstance();
-    cal.set(Calendar.HOUR_OF_DAY,
-        0); //If there is more than an hour of data, the number of minutes/seconds will increment this
+    cal.set(
+        Calendar.HOUR_OF_DAY,
+        0); // If there is more than an hour of data, the number of minutes/seconds will increment
+    // this
     cal.set(Calendar.MINUTE, (int) minutes);
     cal.set(Calendar.SECOND, (int) seconds);
 
     if (forBuildComparison) {
-      sElapsed = String.format("2017-01-01 %02d:%02d:%02d", cal.get(Calendar.HOUR_OF_DAY),
-          cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
+      sElapsed =
+          String.format(
+              "2017-01-01 %02d:%02d:%02d",
+              cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
     } else {
-      sElapsed = String.format("%s %02d:%02d:%02d",
-          DateTimeFormatter.ofPattern("yyyy-mm-dd").format(LocalDateTime.now()),
-          cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
+      sElapsed =
+          String.format(
+              "%s %02d:%02d:%02d",
+              DateTimeFormatter.ofPattern("yyyy-mm-dd").format(LocalDateTime.now()),
+              cal.get(Calendar.HOUR_OF_DAY),
+              cal.get(Calendar.MINUTE),
+              cal.get(Calendar.SECOND));
     }
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
