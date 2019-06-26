@@ -1,31 +1,17 @@
 [
   {
-    "id" : "jmeter.pack-listener",
-    "name" : "Jmeter Listeners pack",
-    "description" : "This JMeter Plugin allows to write load test data on-the-fly to InfluxDB, ElasticSearch, ClickHouse\nAdditional feature: aggregation of Samplers\nExplanations and usage examples on project wiki.",
-    "screenshotUrl" : "https://gitlab.com/testload/jmeter-listener/wikis/uploads/498fd6f5a85d7ce62f5cad54f69f6ce7/Screenshot_at_May_08_14-21-40.png",
-    "helpUrl": "https://gitlab.com/testload/jmeter-listener/wikis/home",
-    "vendor": "cloud.testload",
-    "markerClass": "cloud.testload.jmeter.ClickHouseBackendListenerCLient",
-    "versions" : {
-      "1.5" : {
-        "downloadUrl" : "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.5/jmeter.pack-listener-1.5.jar"
-      }
-    }
-  },
-  {
-    "id": "websocket-samplers",
-    "name": "WebSocket Samplers by Peter Doornbosch",
-    "description": "Provides a number of samplers for load testing WebSocket applications.",
-    "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
-    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",
-    "vendor": "Peter Doornbosch",
-    "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+    "id": "jmeter.backendlistener.kafka",
+    "name": "Kafka backend listener",
+    "description": "Apache JMeter plugin for sending sample results to a Kafka server. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li><li>To use filters, simply separate their name by a semicolon. (f1;f2;f3)</li></ul>",
+    "helpUrl": "https://github.com/rahulsinghai/jmeter-backend-listener-kafka/issues",
+    "screenshotUrl": "https://github.com/rahulsinghai/jmeter-backend-listener-kafka/blob/master/docs/configuration.JPG",
+    "vendor": "rahulsinghai",
+    "markerClass": "io.github.rahulsinghai.jmeter.backendlistener.kafka.KafkaBackendClient",
     "versions": {
-      "0.7.3": {
-        "downloadUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/downloads/JMeterWebSocketSamplers-0.7.3.jar",
+      "1.0.0": {
+        "changes": "Initial version.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/rahulsinghai/jmeter.backendlistener.kafka/1.0.0/jmeter.backendlistener.kafka-1.0.0.jar",
         "depends": [
-          "jmeter-core"
         ]
       }
     }

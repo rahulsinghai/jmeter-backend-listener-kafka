@@ -62,7 +62,7 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 - SSH to a Unix machine with X-11 Forwarding enabled, and then set DISPLAY variable:
 
   ```bash
-  export DISPLAY=<Your terminal IP>:0.0
+  export DISPLAY=Your_terminal_IP:0.0
   ```
 
 - Download [JMeter](https://jmeter.apache.org/download_jmeter.cgi) binary and extract it:
@@ -115,7 +115,7 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 - In your **Test Pan**, right click on **Thread Group** > Add > Listener > Backend Listener
 - Specify parameters as shown in image below (**bootstrap.servers** and **kafka.topic** are mandatory ones): 
 
-![Screenshot of configuration](images/configuration.JPG "Screenshot of configuration")
+![Screenshot of configuration](docs/configuration.JPG "Screenshot of configuration")
 
 ## Screenshots
 
