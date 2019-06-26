@@ -56,7 +56,7 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
   private static final String KAFKA_PARSE_RES_HEADERS = "kafka.parse.all.res.headers";
 
   /** Parameter for setting the Kafka security protocol; "true" or "false". */
-  private static final String KAFKA_USE_SSL = "kafka.use.ssl";
+  private static final String KAFKA_SSL_ENABLED = "kafka.ssl.enabled";
 
   private static final String KAFKA_SSL_KEY_PASSWORD = "kafka.ssl.key.password";
 
@@ -136,6 +136,13 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
     // membership (which may change dynamically), this list need not contain the full set of servers
     // (you may want more than one, though, in case a server is down).
     DEFAULT_ARGS.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, null);
+    DEFAULT_ARGS.put(KAFKA_TOPIC, null);
+    DEFAULT_ARGS.put(KAFKA_SAMPLE_FILTER, null);
+    DEFAULT_ARGS.put(KAFKA_FIELDS, null);
+    DEFAULT_ARGS.put(KAFKA_TEST_MODE, "info");
+    DEFAULT_ARGS.put(KAFKA_PARSE_REQ_HEADERS, "false");
+    DEFAULT_ARGS.put(KAFKA_PARSE_RES_HEADERS, "false");
+    DEFAULT_ARGS.put(KAFKA_TIMESTAMP, "yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
 
     // The total bytes of memory the producer can use to buffer records waiting to be sent to the
     // server.
@@ -170,6 +177,8 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
     // Users should generally prefer to leave this config unset and instead use
     // <code>delivery.timeout.ms</code> to control retry behavior.
     DEFAULT_ARGS.put(ProducerConfig.RETRIES_CONFIG, Integer.toString(2147483647));
+
+    DEFAULT_ARGS.put(KAFKA_SSL_ENABLED, "false");
 
     // The password of the private key in the key store file. This is optional for client.
     DEFAULT_ARGS.put(KAFKA_SSL_KEY_PASSWORD, null);
@@ -268,15 +277,6 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
     // Setting <code>linger.ms=5</code>, for example, would have the effect of reducing the number
     // of requests sent but would add up to 5ms of latency to records sent in the absence of load.
     DEFAULT_ARGS.put(ProducerConfig.LINGER_MS_CONFIG, "0");
-
-    DEFAULT_ARGS.put(KAFKA_TOPIC, null);
-    DEFAULT_ARGS.put(KAFKA_TIMESTAMP, "yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
-    DEFAULT_ARGS.put(KAFKA_SAMPLE_FILTER, null);
-    DEFAULT_ARGS.put(KAFKA_FIELDS, null);
-    DEFAULT_ARGS.put(KAFKA_TEST_MODE, "info");
-    DEFAULT_ARGS.put(KAFKA_PARSE_REQ_HEADERS, "false");
-    DEFAULT_ARGS.put(KAFKA_PARSE_RES_HEADERS, "false");
-    DEFAULT_ARGS.put(KAFKA_USE_SSL, "false");
   }
 
   private KafkaMetricPublisher publisher;
@@ -328,7 +328,7 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
         Integer.parseInt(context.getParameter(ProducerConfig.RETRIES_CONFIG)));
 
     // check if kafka security protocol is SSL or PLAINTEXT (default)
-    if (context.getParameter(KAFKA_USE_SSL).equals("true")) {
+    if (context.getParameter(KAFKA_SSL_ENABLED).equals("true")) {
       logger.info("Setting up SSL properties...");
       props.put(KAFKA_SSL_KEY_PASSWORD, context.getParameter(KAFKA_SSL_KEY_PASSWORD));
       props.put(KAFKA_SSL_KEYSTORE_LOCATION, context.getParameter(KAFKA_SSL_KEYSTORE_LOCATION));

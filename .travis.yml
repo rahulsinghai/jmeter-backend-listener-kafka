@@ -21,7 +21,7 @@ before_install:
   - export PATH=$M2_HOME/bin:$PATH
   - mvn -v
 
-script: "mvn clean cobertura:cobertura package"
+script: "mvn cobertura:cobertura"
 
 # cache the build tool's caches
 cache:
