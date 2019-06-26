@@ -7,24 +7,13 @@ language: java
 jdk:
 - openjdk8
 
-matrix:
-  include:
-    - jdk: openjdk8
-      env: CUSTOM_MVN_VERION="3.6.1"
-
 before_install:
-  - if [[ -n "${CUSTOM_MVN_VERION}" ]]; then
-      echo "Download Maven ${CUSTOM_MVN_VERION}....";
-      if [[ "${CUSTOM_MVN_VERION}" == "3.0" ]]; then
-        wget https://archive.apache.org/dist/maven/binaries/apache-maven-3.0-bin.tar.gz || travis_terminate 1;
-      else
-        wget https://archive.apache.org/dist/maven/maven-3/${CUSTOM_MVN_VERION}/binaries/apache-maven-${CUSTOM_MVN_VERION}-bin.tar.gz || travis_terminate 1;
-      fi;
-      tar xzvf apache-maven-${CUSTOM_MVN_VERION}-bin.tar.gz || travis_terminate 1;
-      export M2_HOME=`pwd`/apache-maven-${CUSTOM_MVN_VERION}
-      export PATH=$M2_HOME/bin:$PATH
-      mvn -v
-    fi
+  - echo "Download Maven 3.6.1....";
+  - wget https://archive.apache.org/dist/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz
+  - tar xzvf apache-maven-3.6.0-bin.tar.gz
+  - export M2_HOME=`pwd`/apache-maven-3.6.1
+  - export PATH=$M2_HOME/bin:$PATH
+  - mvn -v
 
 script: "mvn clean cobertura:cobertura package"
 
