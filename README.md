@@ -6,7 +6,7 @@
 
 A JMeter plug-in that enables you to send test results to a Kafka server.
 
-# Overview
+## Overview
 
 ### Description
 
@@ -17,6 +17,7 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 
 -   Filters
     -   Only send the samples you want, by using Filters! Simply type them as follows in the appropriate field: `filter1;filter2;filter3` or `sampleLabel_must_contain_this`.
+
 -   Specific fields `field1;field2;field3`
     -   Specify fields that you want to send to Kafka (possible fields below):
         -   AllThreads
@@ -41,11 +42,13 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
         -   SampleEndTime
         -   Timestamp
         -   InjectorHostname
+
 -   Verbose, semi-verbose, error only, and quiet mode:
     -   **debug** : Send request/response information of all samplers (headers, body, etc.)
     -   **info** : Sends all samplers to the Kafka server, but only sends the headers, body info for the failed samplers.
     -   **quiet** : Only sends the response time, bytes, and other metrics
     -   **error** : Only sends the failing samplers to the Kafka server (Along with their headers and body information).
+
 -   Use Logstash/NiFi or any other tool to consume data from Kafka topic and then ingest it into a Database of your liking.
 
 ### Maven dependency
