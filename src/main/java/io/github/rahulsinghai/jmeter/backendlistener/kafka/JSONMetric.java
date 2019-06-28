@@ -288,19 +288,19 @@ public class JSONMetric {
     if (forBuildComparison) {
       sElapsed =
           String.format(
-              "2017-01-01 %02d:%02d:%02d",
+              "2019-07-01 %02d:%02d:%02d",
               cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
     } else {
       sElapsed =
           String.format(
               "%s %02d:%02d:%02d",
-              DateTimeFormatter.ofPattern("yyyy-mm-dd").format(LocalDateTime.now()),
+              DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now()),
               cal.get(Calendar.HOUR_OF_DAY),
               cal.get(Calendar.MINUTE),
               cal.get(Calendar.SECOND));
     }
 
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     try {
       return formatter.parse(sElapsed);
     } catch (ParseException e) {
