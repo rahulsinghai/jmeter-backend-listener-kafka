@@ -1,89 +1,74 @@
 [
   {
-    "_id": "JMeter_statistic_dashboard",
-    "_type": "dashboard",
-    "_source": {
-      "title": "JMeter statistic",
-      "hits": 0,
-      "description": "",
-      "panelsJSON": "[{\"panelIndex\":\"5\",\"gridData\":{\"x\":0,\"y\":4,\"w\":12,\"h\":4,\"i\":\"5\"},\"embeddableConfig\":{},\"id\":\"Aggregate_report_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":4,\"y\":1,\"w\":8,\"h\":3,\"i\":\"6\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":false}},\"id\":\"TPS_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"7\",\"gridData\":{\"x\":0,\"y\":1,\"w\":4,\"h\":3,\"i\":\"7\"},\"embeddableConfig\":{\"vis\":{\"defaultColors\":{\"0 - 500\":\"rgb(165,0,38)\",\"1000 - 5000\":\"rgb(0,104,55)\",\"500 - 1000\":\"rgb(255,255,190)\"},\"legendOpen\":false}},\"id\":\"Intensity_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":1,\"i\":\"8\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"Controls_visualization\"}]",
-      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":true,\"useMargins\":false}",
-      "version": 1,
-      "timeRestore": false,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 1
-    }
-  },
-  {
-    "_id": "Intensity_visualization",
-    "_type": "visualization",
-    "_source": {
-      "title": "Intensity",
-      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"1-bucket\",\"params\":{\"customInterval\":\"30s\",\"extended_bounds\":{},\"field\":\"Timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"TPS\",\"customMetric\":{\"enabled\":true,\"id\":\"1-metric\",\"params\":{\"field\":\"SampleCount\",\"json\":\"{ \\\"script\\\" : \\\"_value/60\\\" }\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"}],\"params\":{\"addLegend\":true,\"addTooltip\":true,\"gauge\":{\"backStyle\":\"Full\",\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":500},{\"from\":500,\"to\":1000},{\"from\":1000,\"to\":5000}],\"extendRange\":true,\"gaugeColorMode\":\"Labels\",\"gaugeStyle\":\"Full\",\"gaugeType\":\"Arc\",\"invertColors\":true,\"labels\":{\"color\":\"black\",\"show\":true},\"orientation\":\"vertical\",\"percentageMode\":false,\"scale\":{\"color\":\"#333\",\"labels\":false,\"show\":true},\"style\":{\"bgColor\":false,\"bgFill\":\"#eee\",\"bgMask\":false,\"bgWidth\":0.9,\"fontSize\":60,\"labelColor\":true,\"mask\":false,\"maskBars\":50,\"subText\":\"\",\"width\":0.9},\"type\":\"meter\",\"verticalSplit\":false},\"isDisplayWarning\":false,\"type\":\"gauge\"},\"title\":\"Intensity\",\"type\":\"gauge\"}",
-      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 500\":\"rgb(165,0,38)\",\"500 - 1000\":\"rgb(255,255,190)\",\"1000 - 5000\":\"rgb(0,104,55)\"}}}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 1
-    }
-  },
-  {
-    "_id": "TPS_visualization",
-    "_type": "visualization",
-    "_source": {
-      "title": "TPS",
-      "visState": "{\"title\":\"TPS\",\"type\":\"area\",\"params\":{\"type\":\"area\",\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"RightAxis-1\",\"type\":\"value\",\"position\":\"right\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"silhouette\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"TPS\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"TPS\",\"id\":\"1\"},\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"linear\",\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"SampleCount\",\"json\":\"{ \\\"script\\\" : \\\"_value/60\\\" }\",\"customLabel\":\"TPS\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Timestamp\",\"interval\":\"m\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\".\"}}]}",
-      "uiStateJSON": "{\"vis\":{\"legendOpen\":false}}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 1
-    }
-  },
-  {
-    "_id": "Controls_visualization",
-    "_type": "visualization",
-    "_source": {
-      "title": "Controls",
-      "visState": "{\"title\":\"Controls\",\"type\":\"input_control_vis\",\"params\":{\"controls\":[{\"fieldName\":\"es-testName.keyword\",\"id\":\"1542568300307\",\"indexPattern\":\"jmeter_metrics\",\"label\":\"Profile\",\"options\":{\"multiselect\":true,\"order\":\"desc\",\"size\":5,\"type\":\"terms\"},\"type\":\"list\"},{\"id\":\"1542568419863\",\"indexPattern\":\"jmeter_metrics\",\"fieldName\":\"es-runid.keyword\",\"label\":\"RunId\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"size\":5,\"order\":\"desc\"}}],\"updateFiltersOnChange\":true,\"useTimeFilter\":true},\"aggs\":[]}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
-      }
-    },
-    "_meta": {
-      "savedObjectVersion": 1
-    }
-  },
-  {
     "_id": "Aggregate_report_visualization",
     "_type": "visualization",
     "_source": {
-      "title": "Aggregate report",
-      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customLabel\":\"Total\"},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"4\",\"params\":{\"customLabel\":\"Records\",\"field\":\"SampleCount\"},\"schema\":\"metric\",\"type\":\"sum\"},{\"enabled\":true,\"id\":\"6\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"6-bucket\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"Timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"per sec.\",\"customMetric\":{\"enabled\":true,\"id\":\"6-metric\",\"params\":{\"field\":\"SampleCount\",\"json\":\"{ \\\"script\\\" : \\\"_value/60\\\" }\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"},{\"enabled\":true,\"id\":\"3\",\"params\":{\"customLabel\":\"AVG resp.\",\"field\":\"ResponseTime\",\"json\":\"{ \\\"script\\\" : \\\"_value/1000\\\" }\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"7\",\"params\":{\"customLabel\":\".\",\"field\":\"ResponseTime\",\"json\":\"{ \\\"script\\\" : \\\"_value/1000\\\" }\",\"percents\":[97]},\"schema\":\"metric\",\"type\":\"percentiles\"},{\"enabled\":true,\"id\":\"5\",\"params\":{\"customLabel\":\"Errors\",\"field\":\"ErrorCount\"},\"schema\":\"metric\",\"type\":\"sum\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customLabel\":\"Transaction\",\"field\":\"SampleLabel.keyword\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"order\":\"desc\",\"orderBy\":\"1\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"size\":5},\"schema\":\"bucket\",\"type\":\"terms\"}],\"params\":{\"perPage\":null,\"showMeticsAtAllLevels\":false,\"showMetricsAtAllLevels\":false,\"showPartialRows\":false,\"showTotal\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"totalFunc\":\"count\"},\"title\":\"Aggregate report\",\"type\":\"table\"}",
+      "title": "JMeter Metrics Aggregate report",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customLabel\":\"Total\"},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"4\",\"params\":{\"customLabel\":\"Records\",\"field\":\"SampleCount\"},\"schema\":\"metric\",\"type\":\"sum\"},{\"enabled\":true,\"id\":\"6\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"6-bucket\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"Timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"per sec.\",\"customMetric\":{\"enabled\":true,\"id\":\"6-metric\",\"params\":{\"field\":\"SampleCount\",\"json\":\"{ \\\"script\\\" : \\\"_value/60\\\" }\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"},{\"enabled\":true,\"id\":\"3\",\"params\":{\"customLabel\":\"AVG resp.\",\"field\":\"ResponseTime\",\"json\":\"{ \\\"script\\\" : \\\"_value/1000\\\" }\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"7\",\"params\":{\"customLabel\":\".\",\"field\":\"ResponseTime\",\"json\":\"{ \\\"script\\\" : \\\"_value/1000\\\" }\",\"percents\":[97]},\"schema\":\"metric\",\"type\":\"percentiles\"},{\"enabled\":true,\"id\":\"5\",\"params\":{\"customLabel\":\"Errors\",\"field\":\"ErrorCount\"},\"schema\":\"metric\",\"type\":\"sum\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customLabel\":\"Transaction\",\"field\":\"SampleLabel\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"order\":\"desc\",\"orderBy\":\"1\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"size\":5},\"schema\":\"bucket\",\"type\":\"terms\"}],\"params\":{\"perPage\":null,\"showMeticsAtAllLevels\":false,\"showMetricsAtAllLevels\":false,\"showPartialRows\":false,\"showTotal\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"totalFunc\":\"count\"},\"title\":\"JMeter Metrics Aggregate report\",\"type\":\"table\"}",
       "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
       }
-    },
-    "_meta": {
-      "savedObjectVersion": 1
+    }
+  },
+  {
+    "_id": "Controls_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Controls",
+      "visState": "{\"title\":\"JMeter Metrics Controls\",\"type\":\"input_control_vis\",\"params\":{\"controls\":[{\"fieldName\":\"SampleLabel\",\"id\":\"1542568300307\",\"indexPattern\":\"jmeter_metrics\",\"label\":\"Profile\",\"options\":{\"multiselect\":true,\"order\":\"desc\",\"size\":5,\"type\":\"terms\"},\"type\":\"list\"},{\"id\":\"1542568419863\",\"indexPattern\":\"jmeter_metrics\",\"fieldName\":\"ThreadName\",\"label\":\"RunId\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"size\":5,\"order\":\"desc\"}}],\"updateFiltersOnChange\":true,\"useTimeFilter\":true},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "Intensity_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Intensity",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"1-bucket\",\"params\":{\"customInterval\":\"30s\",\"extended_bounds\":{},\"field\":\"Timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"TPS\",\"customMetric\":{\"enabled\":true,\"id\":\"1-metric\",\"params\":{\"customLabel\":\"TPS\",\"field\":\"SampleCount\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"}],\"params\":{\"addLegend\":true,\"addTooltip\":true,\"gauge\":{\"backStyle\":\"Full\",\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":500},{\"from\":500,\"to\":1000},{\"from\":1000,\"to\":5000}],\"extendRange\":true,\"gaugeColorMode\":\"Labels\",\"gaugeStyle\":\"Full\",\"gaugeType\":\"Arc\",\"invertColors\":true,\"labels\":{\"color\":\"black\",\"show\":true},\"orientation\":\"vertical\",\"percentageMode\":false,\"scale\":{\"color\":\"#333\",\"labels\":false,\"show\":true},\"style\":{\"bgColor\":false,\"bgFill\":\"#eee\",\"bgMask\":false,\"bgWidth\":0.9,\"fontSize\":60,\"labelColor\":true,\"mask\":false,\"maskBars\":50,\"subText\":\"\",\"width\":0.9},\"type\":\"meter\",\"verticalSplit\":false},\"isDisplayWarning\":false,\"type\":\"gauge\"},\"title\":\"JMeter Metrics Intensity\",\"type\":\"gauge\"}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 500\":\"rgb(165,0,38)\",\"500 - 1000\":\"rgb(255,255,190)\",\"1000 - 5000\":\"rgb(0,104,55)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "TPS_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics TPS",
+      "visState": "{\"title\":\"JMeter Metrics TPS\",\"type\":\"area\",\"params\":{\"type\":\"area\",\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"RightAxis-1\",\"type\":\"value\",\"position\":\"right\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"silhouette\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"TPS\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"TPS\",\"id\":\"1\"},\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"linear\",\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"SampleCount\",\"customLabel\":\"TPS\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Timestamp\",\"interval\":\"m\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\".\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_statistic_dashboard",
+    "_type": "dashboard",
+    "_source": {
+      "title": "JMeter Metrics Dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"5\",\"gridData\":{\"x\":0,\"y\":25,\"w\":47,\"h\":16,\"i\":\"5\"},\"embeddableConfig\":{},\"id\":\"Aggregate_report_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":26,\"y\":5,\"w\":21,\"h\":20,\"i\":\"6\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":false}},\"id\":\"TPS_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"7\",\"gridData\":{\"x\":0,\"y\":5,\"w\":26,\"h\":20,\"i\":\"7\"},\"embeddableConfig\":{\"vis\":{\"defaultColors\":{\"0 - 500\":\"rgb(165,0,38)\",\"1000 - 5000\":\"rgb(0,104,55)\",\"500 - 1000\":\"rgb(255,255,190)\"},\"legendOpen\":false}},\"id\":\"Intensity_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":0,\"w\":48,\"h\":5,\"i\":\"8\"},\"version\":\"6.3.1\",\"type\":\"visualization\",\"id\":\"Controls_visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":true,\"useMargins\":false}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
     }
   }
 ]
