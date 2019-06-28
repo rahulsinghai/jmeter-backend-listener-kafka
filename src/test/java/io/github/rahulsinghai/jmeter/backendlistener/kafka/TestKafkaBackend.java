@@ -22,8 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TestKafkaBackend {
 
@@ -31,7 +31,7 @@ public class TestKafkaBackend {
 
   private JSONMetric metricCI;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     metricCI =
         new JSONMetric(

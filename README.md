@@ -123,6 +123,14 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 
 ![Screenshot of configuration](docs/configuration.JPG "Screenshot of configuration")
 
+### Running your JMeter test plan
+
+You can run the test plan in GUI mode or in CLI mode using command like below:
+
+```bash
+bin/jmeter -H [HTTP proxy server] -P [HTTP proxy port] -N "localhost|127.0.0.1|*.singhaiuklimited.com" -n -t test_kafkaserver.jmx -l test_kafkaserver_result.jtl
+```
+
 ## Screenshots
 
 ### Sample Grafana dashboard

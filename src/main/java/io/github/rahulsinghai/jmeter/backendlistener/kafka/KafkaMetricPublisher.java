@@ -53,6 +53,7 @@ public class KafkaMetricPublisher {
 
   /** This method closes the producer */
   public void closeProducer() {
+    this.producer.flush();
     this.producer.close();
   }
 
@@ -74,24 +75,27 @@ public class KafkaMetricPublisher {
   public void publishMetrics() {
 
     long time = System.currentTimeMillis();
-
-    for (String metric : this.metricList) {
-      final ProducerRecord<Long, String> record = new ProducerRecord<>(this.topic, metric);
+    for (int i = 0; i < this.metricList.size(); i++) {
+      final ProducerRecord<Long, String> record =
+          new ProducerRecord<>(this.topic, i + time, metricList.get(i));
       producer.send(
           record,
           (metadata, exception) -> {
             long elapsedTime = System.currentTimeMillis() - time;
             if (metadata != null) {
-              System.out.printf(
-                  "sent record(key=%s value=%s) " + "meta(partition=%d, offset=%d) time=%d\n",
-                  record.key(),
-                  record.value(),
-                  metadata.partition(),
-                  metadata.offset(),
-                  elapsedTime);
+              if (logger.isDebugEnabled()) {
+                logger.debug(
+                    "Record sent with (key=%s value=%s) "
+                        + "meta(partition=%d, offset=%d) time=%d\n",
+                    record.key(),
+                    record.value(),
+                    metadata.partition(),
+                    metadata.offset(),
+                    elapsedTime);
+              }
             } else {
               if (logger.isErrorEnabled()) {
-                logger.error("Exception" + exception);
+                logger.error("Exception: " + exception);
                 logger.error(
                     "Kafka Backend Listener was unable to publish to the Kafka topic {}.",
                     this.topic);

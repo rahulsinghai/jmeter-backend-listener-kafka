@@ -17,6 +17,7 @@
 package io.github.rahulsinghai.jmeter.backendlistener.kafka;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -70,8 +71,9 @@ public class JSONMetric {
    *
    * @param context BackendListenerContext
    * @return a JSON Object as Map(String, Object)
+   * @throws UnknownHostException If unable to determine injector host name.
    */
-  public Map<String, Object> getMetric(BackendListenerContext context) throws Exception {
+  public Map<String, Object> getMetric(BackendListenerContext context) throws UnknownHostException {
     SimpleDateFormat sdf = new SimpleDateFormat(this.kafkaTimestamp);
 
     // add all the default SampleResult parameters
@@ -101,8 +103,6 @@ public class JSONMetric {
     // Add the details according to the mode that is set
     switch (this.kafkaTestMode) {
       case "debug":
-        addDetails();
-        break;
       case "error":
         addDetails();
         break;
@@ -127,7 +127,8 @@ public class JSONMetric {
   private void addAssertions() {
     AssertionResult[] assertionResults = this.sampleResult.getAssertionResults();
     if (assertionResults != null) {
-      Map<String, Object>[] assertionArray = new HashMap[assertionResults.length];
+      @SuppressWarnings("unchecked")
+      HashMap<String, Object>[] assertionArray = new HashMap[assertionResults.length];
       int i = 0;
       String failureMessage = "";
       boolean isFailure = false;
@@ -183,7 +184,7 @@ public class JSONMetric {
     while (pluginParameters.hasNext()) {
       String parameterName = pluginParameters.next();
 
-      if (!parameterName.startsWith("es.")
+      if (!parameterName.startsWith(KafkaBackendClient.SERVICE_NAME_PREFIX)
           && !context.getParameter(parameterName).trim().equals("")) {
         String parameter = context.getParameter(parameterName).trim();
 
@@ -232,8 +233,8 @@ public class JSONMetric {
     }
 
     for (String[] lines : headersArrayList) {
-      for (int i = 0; i < lines.length; i++) {
-        String[] header = lines[i].split(":", 2);
+      for (String line : lines) {
+        String[] header = line.split(":", 2);
 
         // if not all req headers and header contains special X-tag
         if (header.length > 1) {
