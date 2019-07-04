@@ -1,0 +1,179 @@
+[
+  {
+    "_id": "JMeter_Metrics_Synthesis_Report_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Synthesis Report",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customLabel\":\"# of samples\"},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customLabel\":\"Transaction\",\"field\":\"SampleLabel\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"order\":\"desc\",\"orderBy\":\"1\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"size\":10},\"schema\":\"bucket\",\"type\":\"terms\"},{\"enabled\":true,\"id\":\"3\",\"params\":{\"customLabel\":\"Avg. response time (msec)\",\"field\":\"ResponseTime\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"4\",\"params\":{\"customLabel\":\"# of errors\",\"field\":\"ErrorCount\"},\"schema\":\"metric\",\"type\":\"sum\"},{\"enabled\":true,\"id\":\"5\",\"params\":{\"customLabel\":\"Avg. Bytes\",\"field\":\"Bytes\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"6\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"6-bucket\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"s\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"Sent bytes per second\",\"customMetric\":{\"enabled\":true,\"id\":\"6-metric\",\"params\":{\"field\":\"SentBytes\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"},{\"enabled\":true,\"id\":\"7\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"7-bucket\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"Samples per minute\",\"customMetric\":{\"enabled\":true,\"id\":\"7-metric\",\"params\":{\"field\":\"SampleCount\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"},{\"enabled\":true,\"id\":\"8\",\"params\":{\"customLabel\":\"Response time\",\"field\":\"ResponseTime\",\"percents\":[90]},\"schema\":\"metric\",\"type\":\"percentiles\"}],\"params\":{\"perPage\":10,\"showMeticsAtAllLevels\":false,\"showPartialRows\":false,\"showTotal\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"totalFunc\":\"sum\"},\"title\":\"JMeter Metrics Synthesis Report\",\"type\":\"table\"}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Number_of_active_threads_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Number of active threads",
+      "visState": "{\"title\":\"JMeter Metrics Number of active threads\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"AllThreads\",\"customLabel\":\"Number of active threads\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Transactions_per_minute_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Transactions per minute",
+      "visState": "{\"title\":\"JMeter Metrics Transactions per minute\",\"type\":\"area\",\"params\":{\"type\":\"area\",\"grid\":{\"categoryLines\":true,\"style\":{\"color\":\"#eee\"},\"valueAxis\":\"ValueAxis-1\"},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"# of transactions\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"# of transactions\",\"id\":\"1\"},\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"linear\",\"valueAxis\":\"ValueAxis-1\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"SampleCount\",\"customLabel\":\"# of transactions\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"Timestamp\",\"interval\":\"m\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{},\"customLabel\":\"Transactions per minute\"}}]}",
+      "uiStateJSON": "{\"vis\":{\"legendOpen\":false}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_90th_percentile_of_response_time_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics 90th percentile of response time",
+      "visState": "{\"title\":\"JMeter Metrics 90th percentile of response time\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"percentile\",\"percentiles\":[{\"value\":\"90\",\"percentile\":\"\",\"shade\":0.2,\"id\":\"e47183a0-9cbc-11e9-b82c-4141549369ad\",\"mode\":\"line\"}],\"field\":\"ResponseTime\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"ms,s,3\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":0.5,\"stacked\":\"none\",\"label\":\"90th percentile of response time\",\"terms_field\":\"SampleLabel\",\"value_template\":\"{{value}} sec\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Number_of_threads_Vs_Response_time_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Number of threads Vs Response time",
+      "visState": "{\"title\":\"JMeter Metrics Number of threads Vs Response time\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"avg\",\"field\":\"AllThreads\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"label\":\"Average Number of Threads\"},{\"id\":\"2fd83430-9cb6-11e9-b82c-4141549369ad\",\"color\":\"rgba(252,196,0,1)\",\"split_mode\":\"everything\",\"metrics\":[{\"id\":\"2fd83431-9cb6-11e9-b82c-4141549369ad\",\"type\":\"avg\",\"field\":\"ResponseTime\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"label\":\"Average Response Time\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Number_of_errors_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Number of errors",
+      "visState": "{\"title\":\"JMeter Metrics Number of errors\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"value\":\"99\",\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"sum\",\"field\":\"ErrorCount\",\"percentiles\":[{\"id\":\"7ace2b20-9cbb-11e9-b82c-4141549369ad\",\"mode\":\"line\",\"shade\":0.2,\"value\":50}]}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"terms_field\":\"SampleLabel\",\"label\":\"# of errors\",\"terms_order_by\":\"61ca57f2-469d-11e7-af02-69e470af7417\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Response_time_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Response time",
+      "visState": "{\"title\":\"JMeter Metrics Response time\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"avg\",\"field\":\"ResponseTime\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"ms,s,3\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"label\":\"Response Time\",\"terms_field\":\"SampleLabel\",\"terms_order_by\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"value_template\":\"{{value}} sec\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"auto\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Sent_KB_per_minute_per_transaction_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Sent KB per minute per transaction",
+      "visState": "{\"title\":\"JMeter Metrics Sent KB per minute per transaction\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"sum\",\"field\":\"SentBytes\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"bytes\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"label\":\"Sent KB/minute per transaction\",\"terms_field\":\"SampleLabel\",\"terms_order_by\":\"61ca57f2-469d-11e7-af02-69e470af7417\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Hits_per_minute_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Hits per minute",
+      "visState": "{\"title\":\"JMeter Metrics Hits per minute\",\"type\":\"metrics\",\"params\":{\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"type\":\"timeseries\",\"series\":[{\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"color\":\"#68BC00\",\"split_mode\":\"terms\",\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"count\"}],\"seperate_axis\":0,\"axis_position\":\"right\",\"formatter\":\"number\",\"chart_type\":\"line\",\"line_width\":1,\"point_size\":1,\"fill\":\"0\",\"stacked\":\"none\",\"terms_field\":\"SampleLabel\",\"label\":\"Hits per minute\",\"terms_order_by\":\"61ca57f2-469d-11e7-af02-69e470af7417\"}],\"time_field\":\"@timestamp\",\"index_pattern\":\"jmeter_metrics\",\"interval\":\"1m\",\"axis_position\":\"left\",\"axis_formatter\":\"number\",\"show_legend\":1,\"show_grid\":1},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Controls_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Controls",
+      "visState": "{\"title\":\"JMeter Metrics Controls\",\"type\":\"input_control_vis\",\"params\":{\"controls\":[{\"fieldName\":\"SampleLabel\",\"id\":\"1542568300307\",\"indexPattern\":\"jmeter_metrics\",\"label\":\"Transaction\",\"options\":{\"multiselect\":true,\"order\":\"desc\",\"size\":5,\"type\":\"terms\"},\"type\":\"list\"},{\"id\":\"1542568419863\",\"indexPattern\":\"jmeter_metrics\",\"fieldName\":\"ThreadName\",\"label\":\"ThreadName\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"size\":5,\"order\":\"desc\"},\"parent\":\"\"}],\"updateFiltersOnChange\":true,\"useTimeFilter\":true,\"pinFilters\":false},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Intensity_visualization",
+    "_type": "visualization",
+    "_source": {
+      "title": "JMeter Metrics Intensity",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"customBucket\":{\"enabled\":true,\"id\":\"1-bucket\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"m\",\"min_doc_count\":1},\"schema\":{\"aggFilter\":[],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"bucketAgg\",\"params\":[],\"title\":\"Bucket Agg\"},\"type\":\"date_histogram\"},\"customLabel\":\"Transactions per minute\",\"customMetric\":{\"enabled\":true,\"id\":\"1-metric\",\"params\":{\"field\":\"SampleCount\"},\"schema\":{\"aggFilter\":[\"!top_hits\",\"!percentiles\",\"!percentile_ranks\",\"!median\",\"!std_dev\",\"!sum_bucket\",\"!avg_bucket\",\"!min_bucket\",\"!max_bucket\",\"!derivative\",\"!moving_avg\",\"!serial_diff\",\"!cumulative_sum\"],\"deprecate\":false,\"editor\":false,\"group\":\"none\",\"max\":null,\"min\":0,\"name\":\"metricAgg\",\"params\":[],\"title\":\"Metric Agg\"},\"type\":\"sum\"}},\"schema\":\"metric\",\"type\":\"avg_bucket\"}],\"params\":{\"addLegend\":false,\"addTooltip\":true,\"metric\":{\"colorSchema\":\"Green to Red\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"invertColors\":false,\"labels\":{\"show\":true},\"metricColorMode\":\"None\",\"percentageMode\":false,\"style\":{\"bgColor\":false,\"bgFill\":\"#000\",\"fontSize\":60,\"labelColor\":false,\"subText\":\"\"},\"useRanges\":false},\"type\":\"metric\"},\"title\":\"JMeter Metrics Intensity\",\"type\":\"metric\"}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"jmeter_metrics\",\"filter\":[],\"query\":{\"query\":\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  },
+  {
+    "_id": "JMeter_Metrics_Statistics_Dashboard",
+    "_type": "dashboard",
+    "_source": {
+      "title": "JMeter Metrics Statistics Dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"6\",\"gridData\":{\"x\":24,\"y\":0,\"w\":24,\"h\":16,\"i\":\"6\"},\"embeddableConfig\":{\"vis\":{\"legendOpen\":false}},\"id\":\"JMeter_Metrics_Transactions_per_minute_visualization\",\"type\":\"visualization\",\"version\":\"6.4.0\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":5,\"i\":\"8\"},\"id\":\"JMeter_Metrics_Controls_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"9\",\"gridData\":{\"x\":0,\"y\":16,\"w\":24,\"h\":15,\"i\":\"9\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_90th_percentile_of_response_time_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"10\",\"gridData\":{\"x\":24,\"y\":31,\"w\":24,\"h\":15,\"i\":\"10\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Hits_per_minute_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"11\",\"gridData\":{\"x\":0,\"y\":31,\"w\":24,\"h\":15,\"i\":\"11\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Number_of_errors_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"12\",\"gridData\":{\"x\":24,\"y\":16,\"w\":24,\"h\":15,\"i\":\"12\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Number_of_threads_Vs_Response_time_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"13\",\"gridData\":{\"x\":0,\"y\":46,\"w\":24,\"h\":15,\"i\":\"13\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Response_time_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"14\",\"gridData\":{\"x\":24,\"y\":46,\"w\":24,\"h\":15,\"i\":\"14\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Sent_KB_per_minute_per_transaction_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"15\",\"gridData\":{\"x\":0,\"y\":61,\"w\":48,\"h\":24,\"i\":\"15\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Synthesis_Report_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"16\",\"gridData\":{\"x\":12,\"y\":5,\"w\":12,\"h\":11,\"i\":\"16\"},\"embeddableConfig\":{},\"id\":\"JMeter_Metrics_Number_of_active_threads_visualization\",\"type\":\"visualization\",\"version\":\"6.3.1\"},{\"panelIndex\":\"17\",\"gridData\":{\"x\":0,\"y\":5,\"w\":12,\"h\":11,\"i\":\"17\"},\"version\":\"6.3.1\",\"type\":\"visualization\",\"id\":\"JMeter_Metrics_Intensity_visualization\",\"embeddableConfig\":{}}]",
+      "optionsJSON": "{\"darkTheme\":true,\"hidePanelTitles\":false,\"useMargins\":false}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-4h",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

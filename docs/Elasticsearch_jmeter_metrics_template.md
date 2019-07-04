@@ -11,7 +11,7 @@ DELETE /_template/jmeter_metrics_template
 PUT _template/jmeter_metrics_template
 {
   "order": 1,
-  "template": "jmeter_metrics-*",
+  "index_patterns": "jmeter_metrics-*",
   "settings": {
     "index": {
       "codec": "best_compression",
@@ -37,12 +37,10 @@ PUT _template/jmeter_metrics_template
           }
         }
       ],
-      "_all": {
-        "enabled": false
-      },
       "properties": {
         "@timestamp": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "@version": {
           "type": "keyword",
@@ -52,7 +50,19 @@ PUT _template/jmeter_metrics_template
           "type": "integer"
         },
         "AssertionResults": {
-          "type": "text"
+          "properties": {
+            "failure": {
+              "type": "boolean"
+            },
+            "failureMessage": {
+              "type": "text",
+              "index": false
+            },
+            "name": {
+              "type": "text",
+              "index": false
+            }
+          }
         },
         "BodySize": {
           "type": "long"
@@ -80,16 +90,19 @@ PUT _template/jmeter_metrics_template
           "ignore_above": 256
         },
         "ElapsedTime": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "ElapsedTimeComparison": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "ErrorCount": {
           "type": "integer"
         },
         "FailureMessage": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "GrpThreads": {
           "type": "integer"
@@ -98,30 +111,35 @@ PUT _template/jmeter_metrics_template
           "type": "long"
         },
         "InjectorHostname": {
-          "type": "keyword",
-          "ignore_above": 256
+          "type": "text",
+          "index": false
         },
         "Latency": {
           "type": "long"
         },
         "RequestBody": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "RequestHeaders": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "ResponseBody": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "ResponseCode": {
           "type": "keyword",
           "ignore_above": 256
         },
         "ResponseHeaders": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "ResponseMessage": {
-          "type": "text"
+          "type": "text",
+          "index": false
         },
         "ResponseTime": {
           "type": "long"
@@ -130,14 +148,16 @@ PUT _template/jmeter_metrics_template
           "type": "integer"
         },
         "SampleEndTime": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "SampleLabel": {
           "type": "keyword",
           "ignore_above": 256
         },
         "SampleStartTime": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "SentBytes": {
           "type": "long"
@@ -148,8 +168,8 @@ PUT _template/jmeter_metrics_template
         "TestElement": {
           "properties": {
             "name": {
-              "type": "keyword",
-              "ignore_above": 256
+              "type": "text",
+              "index": false
             }
           }
         },
@@ -161,7 +181,8 @@ PUT _template/jmeter_metrics_template
           "ignore_above": 256
         },
         "Timestamp": {
-          "type": "date"
+          "type": "date",
+          "format": "dateOptionalTime"
         },
         "URL": {
           "type": "keyword",
@@ -180,4 +201,12 @@ PUT jmeter_metrics-2019-06-28
 GET jmeter_metrics-2019-06-28/_mapping
 GET jmeter_metrics-2019-06-28/_aliases
 GET jmeter_metrics-2019-06-28/_settings
+
+GET _cat/indices/jmeter_metrics-*?v&s=index
+GET jmeter_metrics/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
 ```
