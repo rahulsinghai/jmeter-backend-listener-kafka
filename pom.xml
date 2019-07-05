@@ -3,7 +3,7 @@
 
 	<groupId>io.github.rahulsinghai</groupId>
 	<artifactId>jmeter.backendlistener.kafka</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
@@ -42,7 +42,7 @@
 		<connection>scm:git:git://github.com/rahulsinghai/jmeter-backend-listener-kafka.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/rahulsinghai/jmeter-backend-listener-kafka.git</developerConnection>
 		<url>https://github.com/rahulsinghai/jmeter-backend-listener-kafka/tree/master</url>
-	  <tag>jmeter-backend-listener-kafka-1.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<properties>
