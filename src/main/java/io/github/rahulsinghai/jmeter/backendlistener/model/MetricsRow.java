@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.rahulsinghai.jmeter.backendlistener.kafka;
+package io.github.rahulsinghai.jmeter.backendlistener.model;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -36,19 +36,19 @@ import org.apache.jmeter.visualizers.backend.BackendListenerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JSONMetric {
+public class MetricsRow {
 
-  private static final Logger logger = LoggerFactory.getLogger(JSONMetric.class);
+  private static final Logger logger = LoggerFactory.getLogger(MetricsRow.class);
   private SampleResult sampleResult;
   private String kafkaTestMode;
   private String kafkaTimestamp;
   private int ciBuildNumber;
-  private HashMap<String, Object> json;
+  private HashMap<String, Object> metricsMap;
   private Set<String> fields;
   private boolean allReqHeaders;
   private boolean allResHeaders;
 
-  public JSONMetric(
+  public MetricsRow(
       SampleResult sr,
       String testMode,
       String timeStamp,
@@ -60,45 +60,51 @@ public class JSONMetric {
     this.kafkaTestMode = testMode.trim();
     this.kafkaTimestamp = timeStamp.trim();
     this.ciBuildNumber = buildNumber;
-    this.json = new HashMap<>();
+    this.metricsMap = new HashMap<>();
     this.allReqHeaders = parseReqHeaders;
     this.allResHeaders = parseResHeaders;
     this.fields = fields;
   }
 
   /**
-   * This method returns the current metric as a Map(String, Object) for the provided sampleResult
+   * This method returns the current row as a Map(String, Object) for the provided sampleResult
    *
    * @param context BackendListenerContext
-   * @return a JSON Object as Map(String, Object)
+   * @param servicePrefixName Prefix string denoting the service name. This will allow to skip
+   *     adding all service specific parameters to the metrics row.
+   * @return A Map(String, Object) comprising all the metrics as key value objects
    * @throws UnknownHostException If unable to determine injector host name.
    */
-  public Map<String, Object> getMetric(BackendListenerContext context) throws UnknownHostException {
+  public Map<String, Object> getRowAsMap(BackendListenerContext context, String servicePrefixName)
+      throws UnknownHostException {
     SimpleDateFormat sdf = new SimpleDateFormat(this.kafkaTimestamp);
 
     // add all the default SampleResult parameters
-    addFilteredJSON("AllThreads", this.sampleResult.getAllThreads());
-    addFilteredJSON("BodySize", this.sampleResult.getBodySizeAsLong());
-    addFilteredJSON("Bytes", this.sampleResult.getBytesAsLong());
-    addFilteredJSON("SentBytes", this.sampleResult.getSentBytes());
-    addFilteredJSON("ConnectTime", this.sampleResult.getConnectTime());
-    addFilteredJSON("ContentType", this.sampleResult.getContentType());
-    addFilteredJSON("DataType", this.sampleResult.getDataType());
-    addFilteredJSON("ErrorCount", this.sampleResult.getErrorCount());
-    addFilteredJSON("GrpThreads", this.sampleResult.getGroupThreads());
-    addFilteredJSON("IdleTime", this.sampleResult.getIdleTime());
-    addFilteredJSON("Latency", this.sampleResult.getLatency());
-    addFilteredJSON("ResponseTime", this.sampleResult.getTime());
-    addFilteredJSON("SampleCount", this.sampleResult.getSampleCount());
-    addFilteredJSON("SampleLabel", this.sampleResult.getSampleLabel());
-    addFilteredJSON("ThreadName", this.sampleResult.getThreadName());
-    addFilteredJSON("URL", this.sampleResult.getURL());
-    addFilteredJSON("ResponseCode", this.sampleResult.getResponseCode());
-    addFilteredJSON("TestStartTime", JMeterContextService.getTestStartTime());
-    addFilteredJSON("SampleStartTime", sdf.format(new Date(this.sampleResult.getStartTime())));
-    addFilteredJSON("SampleEndTime", sdf.format(new Date(this.sampleResult.getEndTime())));
-    addFilteredJSON("Timestamp", sdf.format(new Date(this.sampleResult.getTimeStamp())));
-    addFilteredJSON("InjectorHostname", InetAddress.getLocalHost().getHostName());
+    addFilteredMetricToMetricsMap("AllThreads", this.sampleResult.getAllThreads());
+    addFilteredMetricToMetricsMap("BodySize", this.sampleResult.getBodySizeAsLong());
+    addFilteredMetricToMetricsMap("Bytes", this.sampleResult.getBytesAsLong());
+    addFilteredMetricToMetricsMap("SentBytes", this.sampleResult.getSentBytes());
+    addFilteredMetricToMetricsMap("ConnectTime", this.sampleResult.getConnectTime());
+    addFilteredMetricToMetricsMap("ContentType", this.sampleResult.getContentType());
+    addFilteredMetricToMetricsMap("DataType", this.sampleResult.getDataType());
+    addFilteredMetricToMetricsMap("ErrorCount", this.sampleResult.getErrorCount());
+    addFilteredMetricToMetricsMap("GrpThreads", this.sampleResult.getGroupThreads());
+    addFilteredMetricToMetricsMap("IdleTime", this.sampleResult.getIdleTime());
+    addFilteredMetricToMetricsMap("Latency", this.sampleResult.getLatency());
+    addFilteredMetricToMetricsMap("ResponseTime", this.sampleResult.getTime());
+    addFilteredMetricToMetricsMap("SampleCount", this.sampleResult.getSampleCount());
+    addFilteredMetricToMetricsMap("SampleLabel", this.sampleResult.getSampleLabel());
+    addFilteredMetricToMetricsMap("ThreadName", this.sampleResult.getThreadName());
+    addFilteredMetricToMetricsMap("URL", this.sampleResult.getURL());
+    addFilteredMetricToMetricsMap("ResponseCode", this.sampleResult.getResponseCode());
+    addFilteredMetricToMetricsMap("TestStartTime", JMeterContextService.getTestStartTime());
+    addFilteredMetricToMetricsMap(
+        "SampleStartTime", sdf.format(new Date(this.sampleResult.getStartTime())));
+    addFilteredMetricToMetricsMap(
+        "SampleEndTime", sdf.format(new Date(this.sampleResult.getEndTime())));
+    addFilteredMetricToMetricsMap(
+        "Timestamp", sdf.format(new Date(this.sampleResult.getTimeStamp())));
+    addFilteredMetricToMetricsMap("InjectorHostname", InetAddress.getLocalHost().getHostName());
 
     // Add the details according to the mode that is set
     switch (this.kafkaTestMode) {
@@ -117,10 +123,10 @@ public class JSONMetric {
 
     addAssertions();
     addElapsedTime(sdf);
-    addCustomFields(context);
+    addCustomFields(context, servicePrefixName);
     parseHeadersAsJsonProps(this.allReqHeaders, this.allResHeaders);
 
-    return this.json;
+    return this.metricsMap;
   }
 
   /** This method adds all the assertions for the current sampleResult */
@@ -130,7 +136,7 @@ public class JSONMetric {
       @SuppressWarnings("unchecked")
       HashMap<String, Object>[] assertionArray = new HashMap[assertionResults.length];
       int i = 0;
-      String failureMessage = "";
+      StringBuilder failureMessageStringBuilder = new StringBuilder();
       boolean isFailure = false;
       for (AssertionResult assertionResult : assertionResults) {
         HashMap<String, Object> assertionMap = new HashMap<>();
@@ -138,21 +144,22 @@ public class JSONMetric {
         isFailure = isFailure || assertionResult.isFailure() || assertionResult.isError();
         assertionMap.put("failure", failure);
         assertionMap.put("failureMessage", assertionResult.getFailureMessage());
-        failureMessage += assertionResult.getFailureMessage() + "\n";
+        failureMessageStringBuilder.append(assertionResult.getFailureMessage());
+        failureMessageStringBuilder.append("\n");
         assertionMap.put("name", assertionResult.getName());
         assertionArray[i] = assertionMap;
         i++;
       }
-      addFilteredJSON("AssertionResults", assertionArray);
-      addFilteredJSON("FailureMessage", failureMessage);
-      addFilteredJSON("Success", !isFailure);
+      addFilteredMetricToMetricsMap("AssertionResults", assertionArray);
+      addFilteredMetricToMetricsMap("FailureMessage", failureMessageStringBuilder.toString());
+      addFilteredMetricToMetricsMap("Success", !isFailure);
     }
   }
 
   /**
-   * This method adds the ElapsedTime as a key:value pair in the JSON object. Also, depending on
-   * whether or not the tests were launched from a CI tool (i.e Jenkins), it will add a hard-coded
-   * version of the ElapsedTime for results comparison purposes
+   * This method adds the ElapsedTime as a key:value pair in the metricsMap object. Also, depending
+   * on whether or not the tests were launched from a CI tool (i.e Jenkins), it will add a
+   * hard-coded version of the ElapsedTime for results comparison purposes
    *
    * @param sdf SimpleDateFormat
    */
@@ -161,16 +168,16 @@ public class JSONMetric {
 
     if (this.ciBuildNumber != 0) {
       elapsedTime = getElapsedTime(true);
-      addFilteredJSON("BuildNumber", this.ciBuildNumber);
+      addFilteredMetricToMetricsMap("BuildNumber", this.ciBuildNumber);
 
       if (elapsedTime != null) {
-        addFilteredJSON("ElapsedTimeComparison", sdf.format(elapsedTime));
+        addFilteredMetricToMetricsMap("ElapsedTimeComparison", sdf.format(elapsedTime));
       }
     }
 
     elapsedTime = getElapsedTime(false);
     if (elapsedTime != null) {
-      addFilteredJSON("ElapsedTime", sdf.format(elapsedTime));
+      addFilteredMetricToMetricsMap("ElapsedTime", sdf.format(elapsedTime));
     }
   }
 
@@ -179,22 +186,22 @@ public class JSONMetric {
    *
    * @param context BackendListenerContext
    */
-  private void addCustomFields(BackendListenerContext context) {
+  private void addCustomFields(BackendListenerContext context, String servicePrefixName) {
     Iterator<String> pluginParameters = context.getParameterNamesIterator();
     while (pluginParameters.hasNext()) {
       String parameterName = pluginParameters.next();
 
-      if (!parameterName.startsWith(KafkaBackendClient.SERVICE_NAME_PREFIX)
+      if (!parameterName.startsWith(servicePrefixName)
           && !context.getParameter(parameterName).trim().equals("")) {
         String parameter = context.getParameter(parameterName).trim();
 
         try {
-          addFilteredJSON(parameterName, Long.parseLong(parameter));
+          addFilteredMetricToMetricsMap(parameterName, Long.parseLong(parameter));
         } catch (Exception e) {
           if (logger.isDebugEnabled()) {
             logger.debug("Cannot convert custom field to number");
           }
-          addFilteredJSON(parameterName, context.getParameter(parameterName).trim());
+          addFilteredMetricToMetricsMap(parameterName, context.getParameter(parameterName).trim());
         }
       }
     }
@@ -202,11 +209,11 @@ public class JSONMetric {
 
   /** Method that adds the request and response's body/headers */
   private void addDetails() {
-    addFilteredJSON("RequestHeaders", this.sampleResult.getRequestHeaders());
-    addFilteredJSON("RequestBody", this.sampleResult.getSamplerData());
-    addFilteredJSON("ResponseHeaders", this.sampleResult.getResponseHeaders());
-    addFilteredJSON("ResponseBody", this.sampleResult.getResponseDataAsString());
-    addFilteredJSON("ResponseMessage", this.sampleResult.getResponseMessage());
+    addFilteredMetricToMetricsMap("RequestHeaders", this.sampleResult.getRequestHeaders());
+    addFilteredMetricToMetricsMap("RequestBody", this.sampleResult.getSamplerData());
+    addFilteredMetricToMetricsMap("ResponseHeaders", this.sampleResult.getResponseHeaders());
+    addFilteredMetricToMetricsMap("ResponseBody", this.sampleResult.getResponseDataAsString());
+    addFilteredMetricToMetricsMap("ResponseMessage", this.sampleResult.getResponseMessage());
   }
 
   /**
@@ -216,9 +223,9 @@ public class JSONMetric {
    * backend listener.
    *
    * @param allReqHeaders boolean to determine if the user wants to separate ALL request headers
-   *     into different ES JSON properties.
+   *     into different JSON properties.
    * @param allResHeaders boolean to determine if the user wants to separate ALL response headers
-   *     into different ES JSON properties.
+   *     into different JSON properties.
    *     <p>NOTE: This will be fixed as soon as a patch comes in for JMeter to change the behaviour.
    */
   private void parseHeadersAsJsonProps(boolean allReqHeaders, boolean allResHeaders) {
@@ -238,10 +245,10 @@ public class JSONMetric {
 
         // if not all req headers and header contains special X-tag
         if (header.length > 1) {
-          if (!this.allReqHeaders && header[0].startsWith("X-es-backend")) {
-            this.json.put(header[0].replaceAll("es-", "").trim(), header[1].trim());
+          if (!this.allReqHeaders && header[0].startsWith("X-kafka-backend")) {
+            this.metricsMap.put(header[0].replaceAll("kafka-", "").trim(), header[1].trim());
           } else {
-            this.json.put(header[0].replaceAll("es-", "").trim(), header[1].trim());
+            this.metricsMap.put(header[0].replaceAll("kafka-", "").trim(), header[1].trim());
           }
         }
       }
@@ -249,12 +256,12 @@ public class JSONMetric {
   }
 
   /**
-   * Adds a given key-value pair to JSON if the key is contained in the field filter or in case of
-   * empty field filter
+   * Adds a given key-value pair to metricsMap if the key is contained in the field filter or in
+   * case of empty field filter
    */
-  private void addFilteredJSON(String key, Object value) {
+  private void addFilteredMetricToMetricsMap(String key, Object value) {
     if (this.fields.size() == 0 || this.fields.contains(key.toLowerCase())) {
-      this.json.put(key, value);
+      this.metricsMap.put(key, value);
     }
   }
 
@@ -267,7 +274,7 @@ public class JSONMetric {
    * @param forBuildComparison boolean to determine if there is CI (continuous integration) or not
    * @return The elapsed time in YYYY-MM-dd HH:mm:ss format
    */
-  public Date getElapsedTime(boolean forBuildComparison) {
+  private Date getElapsedTime(boolean forBuildComparison) {
     String sElapsed;
     // Calculate the elapsed time (Starting from midnight on a random day - enables us to compare of
     // two loads over their duration)

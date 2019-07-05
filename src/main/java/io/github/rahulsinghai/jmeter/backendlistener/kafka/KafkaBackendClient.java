@@ -18,6 +18,7 @@ package io.github.rahulsinghai.jmeter.backendlistener.kafka;
 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import io.github.rahulsinghai.jmeter.backendlistener.model.MetricsRow;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,8 +43,6 @@ import org.slf4j.LoggerFactory;
 public class KafkaBackendClient extends AbstractBackendListenerClient {
 
   private static final Logger logger = LoggerFactory.getLogger(KafkaBackendClient.class);
-
-  static final String SERVICE_NAME_PREFIX = "kafka.";
 
   private static final String BUILD_NUMBER = "BuildNumber";
 
@@ -287,8 +286,8 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
   @Override
   public void handleSampleResults(List<SampleResult> results, BackendListenerContext context) {
     for (SampleResult sr : results) {
-      JSONMetric metric =
-          new JSONMetric(
+      MetricsRow row =
+          new MetricsRow(
               sr,
               context.getParameter(KAFKA_TEST_MODE),
               context.getParameter(KAFKA_TIMESTAMP),
@@ -299,7 +298,9 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
 
       if (validateSample(context, sr)) {
         try {
-          this.publisher.addToList(new Gson().toJson(metric.getMetric(context)));
+          // Prefix to skip from adding service specific parameters to the metrics row
+          String servicePrefixName = "kafka.";
+          this.publisher.addToList(new Gson().toJson(row.getRowAsMap(context, servicePrefixName)));
         } catch (Exception e) {
           logger.error(
               "The Kafka Backend Listener was unable to add sampler to the list of samplers to send... More info in JMeter's console.");

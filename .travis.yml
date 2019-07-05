@@ -21,7 +21,7 @@ before_install:
   - export PATH=$M2_HOME/bin:$PATH
   - mvn -v
 
-script: "mvn cobertura:cobertura"
+script: "mvn test verify"
 
 # cache the build tool's caches
 cache:

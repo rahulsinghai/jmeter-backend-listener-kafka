@@ -18,7 +18,8 @@ package io.github.rahulsinghai.jmeter.backendlistener.kafka;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author rahulsinghai
  * @since 20190624
  */
-public class KafkaMetricPublisher {
+class KafkaMetricPublisher {
 
   private static final Logger logger = LoggerFactory.getLogger(KafkaMetricPublisher.class);
 
@@ -36,7 +37,7 @@ public class KafkaMetricPublisher {
   private String topic;
   private List<String> metricList;
 
-  public KafkaMetricPublisher(KafkaProducer<Long, String> producer, String topic) {
+  KafkaMetricPublisher(KafkaProducer<Long, String> producer, String topic) {
     this.producer = producer;
     this.topic = topic;
     this.metricList = new LinkedList<>();
@@ -47,18 +48,18 @@ public class KafkaMetricPublisher {
    *
    * @return integer representing the size of the JSON documents list
    */
-  public int getListSize() {
+  int getListSize() {
     return this.metricList.size();
   }
 
   /** This method closes the producer */
-  public void closeProducer() {
+  void closeProducer() {
     this.producer.flush();
     this.producer.close();
   }
 
   /** This method clears the JSON documents list */
-  public void clearList() {
+  void clearList() {
     this.metricList.clear();
   }
 
@@ -67,12 +68,12 @@ public class KafkaMetricPublisher {
    *
    * @param metric String parameter representing a JSON document for Kafka
    */
-  public void addToList(String metric) {
+  void addToList(String metric) {
     this.metricList.add(metric);
   }
 
   /** This method publishes the documents present in the list (metricList). */
-  public void publishMetrics() {
+  void publishMetrics() {
 
     long time = System.currentTimeMillis();
     for (int i = 0; i < this.metricList.size(); i++) {
