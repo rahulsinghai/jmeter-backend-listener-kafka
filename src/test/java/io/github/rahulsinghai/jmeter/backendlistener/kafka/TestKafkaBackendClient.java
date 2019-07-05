@@ -35,6 +35,5 @@ public class TestKafkaBackendClient {
   public void testGetDefaultParameters() {
     Arguments args = client.getDefaultParameters();
     assertNotNull(args);
-    System.out.println(args);
   }
 }
