@@ -119,6 +119,7 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 ### Configuring jmeter-backend-listener-kafka plug-in
 
 -   In your **Test Pan**, right click on **Thread Group** > Add > Listener > Backend Listener
+-   Choose `io.github.rahulsinghai.jmeter.backendlistener.kafka.KafkaBackendClient` as `Backend Listener Implementation`.
 -   Specify parameters as shown in image below (**bootstrap.servers** and **kafka.topic** are mandatory ones): 
 
 ![Screenshot of configuration](docs/configuration.JPG "Screenshot of configuration")
@@ -180,11 +181,3 @@ It ensures a single style is used: list items use one type of bullet (_, -, +), 
     # Rewrite all applicable files
     remark . -o
     ```
-
-### Performing release
-
-Run following command when POM file has `-SNAPSHOT` as artifact version:
-
-```bash
-mvn clean release:clean release:prepare release:perform verify deploy
-```
