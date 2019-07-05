@@ -48,18 +48,18 @@ class KafkaMetricPublisher {
    *
    * @return integer representing the size of the JSON documents list
    */
-  int getListSize() {
+  public int getListSize() {
     return this.metricList.size();
   }
 
   /** This method closes the producer */
-  void closeProducer() {
+  public void closeProducer() {
     this.producer.flush();
     this.producer.close();
   }
 
   /** This method clears the JSON documents list */
-  void clearList() {
+  public void clearList() {
     this.metricList.clear();
   }
 
@@ -68,12 +68,12 @@ class KafkaMetricPublisher {
    *
    * @param metric String parameter representing a JSON document for Kafka
    */
-  void addToList(String metric) {
+  public void addToList(String metric) {
     this.metricList.add(metric);
   }
 
   /** This method publishes the documents present in the list (metricList). */
-  void publishMetrics() {
+  public void publishMetrics() {
 
     long time = System.currentTimeMillis();
     for (int i = 0; i < this.metricList.size(); i++) {
