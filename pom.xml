@@ -148,12 +148,15 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
+			<name>Sonatype Nexus Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 		<repository>
 			<id>ossrh</id>
+			<name>Nexus Release Repository</name>
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
+		<downloadUrl>https://oss.sonatype.org/content/groups/public/io/github/rahulsinghai/jmeter.backendlistener.kafka/</downloadUrl>
 	</distributionManagement>
 
 	<!--

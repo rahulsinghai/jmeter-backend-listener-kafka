@@ -180,3 +180,11 @@ It ensures a single style is used: list items use one type of bullet (_, -, +), 
     # Rewrite all applicable files
     remark . -o
     ```
+
+### Performing release
+
+Run following command when POM file has `-SNAPSHOT` as artifact version:
+
+```bash
+mvn clean release:clean release:prepare release:perform verify deploy
+```
