@@ -6,7 +6,7 @@
 
 	<groupId>io.github.rahulsinghai</groupId>
 	<artifactId>jmeter.backendlistener.kafka</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>${project.artifactId}</name>
@@ -60,6 +60,7 @@
 		<maven.jacoco.plugin.version>0.8.4</maven.jacoco.plugin.version>
 		<maven.javadoc.plugin.version>3.1.0</maven.javadoc.plugin.version>
 		<maven.nexus.staging.plugin.version>1.6.8</maven.nexus.staging.plugin.version>
+		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
 		<maven.shade.plugin.version>3.2.1</maven.shade.plugin.version>
 		<maven.source.plugin.version>3.1.0</maven.source.plugin.version>
 		<maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
@@ -155,6 +156,18 @@
 		</repository>
 	</distributionManagement>
 
+	<!--
+	  The plugin configuration for maven-gpg-plugin is wrapped inside a profile.
+	  Usually when you build SNAPSHOT version, you don't want to sign the artifacts, because it's
+	  unnecessary and time-consuming.
+	  Artifact signing is only necessary when it's time to release project.
+	  So, we wrap the plugin configuration with a profile, which will only be activated on project
+	  releasing.
+
+	  This profile will be activated when the value of maven property performRelease is true.
+	  When you use maven-release-plugin and run mvn release:perform, the property value will be
+	  set to true.
+  -->
 	<profiles>
 		<profile>
 			<id>release-sign-artifacts</id>
@@ -189,6 +202,17 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release.plugin.version}</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<releaseProfiles>release-sign-artifacts</releaseProfiles>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
