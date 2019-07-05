@@ -43,7 +43,7 @@
 
 	<scm>
 		<connection>scm:git:git://github.com/rahulsinghai/jmeter-backend-listener-kafka.git</connection>
-		<developerConnection>scm:git:ssh://github.com:rahulsinghai/jmeter-backend-listener-kafka.git</developerConnection>
+		<developerConnection>scm:git:ssh://git@github.com/rahulsinghai/jmeter-backend-listener-kafka.git</developerConnection>
 		<url>https://github.com/rahulsinghai/jmeter-backend-listener-kafka/tree/master</url>
 	</scm>
 
