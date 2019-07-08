@@ -55,9 +55,9 @@ It is inspired from JMeter [ElasticSearch](https://github.com/delirius325/jmeter
 
 ```xml
 <dependency>
-  <groupId>io.github.rahulsinghai</groupId>
-  <artifactId>jmeter.backendlistener.kafka</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+    <groupId>io.github.rahulsinghai</groupId>
+    <artifactId>jmeter.backendlistener.kafka</artifactId>
+    <version>1.0.1</version>
 </dependency>
 ```
 
