@@ -168,6 +168,32 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
   private static final String KAFKA_CONNECTIONS_MAX_IDLE_MS_CONFIG =
       "kafka.connections.max.idle.ms";
 
+  /**
+   * Security Protocol
+   *
+   * <ul>
+   *   <li><code>PLAINTEXT</code>
+   *   <li><code>SASL_SSL</code>
+   * </ul>
+   */
+  private static final String KAFKA_SECURITY_PROTOCOL = "kafka.security.protocol";
+
+  /**
+   * SASL MECHANISM
+   *
+   * <ul>
+   *   <li><code>GSSAPI</code>
+   *   <li><code>PLAIN</code>
+   * </ul>
+   */
+  private static final String KAFKA_SASL_MECHANISM = "kafka.sasl.mechanism";
+
+  /**
+   * JAAS login context parameters for SASL connections in the format used by JAAS configuration
+   * files
+   */
+  private static final String KAFKA_SASL_JAAS_CONFIG = "kafka.sasl.jaas.config";
+
   private static final Map<String, String> DEFAULT_ARGS = new LinkedHashMap<>();
 
   static {
@@ -195,6 +221,9 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
     DEFAULT_ARGS.put(KAFKA_BATCH_SIZE_CONFIG, Integer.toString(16384));
     DEFAULT_ARGS.put(KAFKA_CLIENT_ID_CONFIG, "JMeterKafkaBackendListener");
     DEFAULT_ARGS.put(KAFKA_CONNECTIONS_MAX_IDLE_MS_CONFIG, Long.toString(180000L));
+    DEFAULT_ARGS.put(KAFKA_SECURITY_PROTOCOL, "PLAINTEXT");
+    DEFAULT_ARGS.put(KAFKA_SASL_MECHANISM, "GSSAPI");
+    DEFAULT_ARGS.put(KAFKA_SASL_JAAS_CONFIG, null);
   }
 
   private KafkaMetricPublisher publisher;
@@ -233,6 +262,21 @@ public class KafkaBackendClient extends AbstractBackendListenerClient {
     String compressionType = context.getParameter(KAFKA_COMPRESSION_TYPE_CONFIG);
     if (!Strings.isNullOrEmpty(compressionType)) {
       props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, compressionType);
+    }
+
+    String securityProtocol = context.getParameter(KAFKA_SECURITY_PROTOCOL);
+    if (!Strings.isNullOrEmpty(securityProtocol)) {
+      props.put("security.protocol", securityProtocol);
+    }
+
+    String saslMechanism = context.getParameter(KAFKA_SASL_MECHANISM);
+    if (!Strings.isNullOrEmpty(saslMechanism)) {
+      props.put("sasl.mechanism", saslMechanism);
+    }
+
+    String saslJaasConfig = context.getParameter(KAFKA_SASL_JAAS_CONFIG);
+    if (!Strings.isNullOrEmpty(saslJaasConfig)) {
+      props.put("sasl.jaas.config", saslJaasConfig);
     }
 
     // check if kafka security protocol is SSL or PLAINTEXT (default)
